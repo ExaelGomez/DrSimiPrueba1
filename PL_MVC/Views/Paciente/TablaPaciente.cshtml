@@ -1,0 +1,73 @@
+﻿@model ML.Paciente
+
+@{
+    ViewBag.Title = "Tabla Paciente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista de Pacientes</h2>
+
+<!-- Mostrar errores si los hay -->
+@if (ViewBag.MensajeError != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.MensajeError
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="col-md-12">
+        <h5>
+            Selecciona "Agregar" para agregar un paciente, selecciona "Editar" para modificarlo o "Eliminar" para eliminar un paciente.
+        </h5>
+        <a href="@Url.Action("Form", "Paciente")" class="btn btn-success">
+            <i class="bi bi-person-plus"></i> Agregar
+        </a>
+    </div>
+
+    <!-- Mostrar la tabla si hay pacientes -->
+    @if (Model.Pacientes != null && Model.Pacientes.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Acciones</th> <!-- Columna para los botones -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.Paciente paciente in Model.Pacientes.Cast<ML.Paciente>())
+                    {
+                        <tr>
+                            <td>@paciente.Nombre</td>
+                            <td>@paciente.ApellidoPaterno</td>
+                            <td>@paciente.ApellidoMaterno</td>
+                            <td>@paciente.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <!-- Botón para editar -->
+                                <a href="@Url.Action("Form", "Paciente", new { id = paciente.IdPaciente })" class="btn btn-warning">
+                                    <i>Editar</i>
+                                </a>
+
+                                <!-- Botón para eliminar -->
+                                <a href="@Url.Action("Delete", "Paciente", new { id = paciente.IdPaciente })" class="btn btn-danger">
+                                    <i>Eliminar</i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            No se encontraron pacientes registrados.
+        </div>
+    }
+</div>

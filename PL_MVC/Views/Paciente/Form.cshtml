@@ -1,0 +1,66 @@
+﻿@model ML.Paciente
+
+@{
+    ViewBag.Title = "Formulario Paciente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+
+    @using (Html.BeginForm("Form", "Paciente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.IdPaciente)
+
+<div class="form-horizontal">
+
+    <!-- NOMBRE -->
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = "Nombre" })
+        </div>
+    </div>
+
+    <!-- APELLIDO PATERNO -->
+    <div class="form-group row">
+        @Html.LabelFor(model => model.ApellidoPaterno, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", placeholder = "Apellido Paterno" })
+        </div>
+    </div>
+
+    <!-- APELLIDO MATERNO -->
+    <div class="form-group row">
+        @Html.LabelFor(model => model.ApellidoMaterno, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", placeholder = "Apellido Materno" })
+        </div>
+    </div>
+
+    <!-- FECHA DE NACIMIENTO -->
+    <div class="form-group row">
+        @Html.LabelFor(model => model.FechaNacimiento, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(
+                model => model.FechaNacimiento,
+                new
+                     {
+                    @class = "form-control",
+                    @type = "date",
+                    @Value = Model.FechaNacimiento.ToString("yyyy-MM-dd")
+                })
+        </div>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="form-group row">
+        <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="@Url.Action("TablaPaciente", "Paciente")" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
+
+</div>
+    }
+</div>
